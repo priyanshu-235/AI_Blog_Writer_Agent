@@ -36,9 +36,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 load_dotenv()
 
-# ==========================================================
 # CONFIGURATION
-# ==========================================================
+
 
 TEXT_MODEL = os.getenv(
     "BLOG_TEXT_MODEL",
@@ -50,18 +49,17 @@ IMAGE_MODEL = os.getenv(
     "gemini-2.5-flash-image",
 )
 
-# ==========================================================
 # PRIMARY LLM
-# ==========================================================
+
 
 content_engine = ChatGoogleGenerativeAI(
     model=TEXT_MODEL,
     temperature=0.3,
 )
 
-# ==========================================================
+
 # CONTENT TASK SCHEMA
-# ==========================================================
+
 
 class SectionBlueprint(BaseModel):
     section_id: int
@@ -92,9 +90,8 @@ class SectionBlueprint(BaseModel):
     code_required: bool = False
 
 
-# ==========================================================
-# BLOG OUTLINE
-# ==========================================================
+# Blog Outline
+
 
 class BlogBlueprint(BaseModel):
     title: str
@@ -118,9 +115,8 @@ class BlogBlueprint(BaseModel):
     sections: List[SectionBlueprint]
 
 
-# ==========================================================
-# WEB RESEARCH ITEM
-# ==========================================================
+# web research item
+
 
 class SourceRecord(BaseModel):
     title: str
@@ -140,9 +136,9 @@ class ResearchBundle(BaseModel):
     )
 
 
-# ==========================================================
+
 # ROUTER OUTPUT
-# ==========================================================
+
 
 class RoutingDecision(BaseModel):
     research_needed: bool
@@ -162,9 +158,9 @@ class RoutingDecision(BaseModel):
     results_per_query: int = 5
 
 
-# ==========================================================
+
 # IMAGE PLANNING
-# ==========================================================
+
 
 class DiagramRequest(BaseModel):
     placeholder: str
@@ -198,9 +194,9 @@ class DiagramPlan(BaseModel):
     )
 
 
-# ==========================================================
+
 # GLOBAL WORKFLOW STATE
-# ==========================================================
+
 
 class BlogWorkflowState(TypedDict):
     topic: str
@@ -233,9 +229,9 @@ class BlogWorkflowState(TypedDict):
     final_markdown: str
 
 
-# ==========================================================
+
 # UTILITIES
-# ==========================================================
+
 
 def slugify(text: str) -> str:
     value = text.strip().lower()
@@ -268,9 +264,9 @@ def safe_parse_date(
     except Exception:
         return None
     
-# ==========================================================
+
 # ROUTER PROMPT
-# ==========================================================
+
 
 ROUTING_SYSTEM_PROMPT = """
 You are the routing intelligence for an AI blog writing system.
@@ -549,9 +545,9 @@ def research_completed(
 ) -> str:
 
     return "planner"
-# ==========================================================
+
 # BLOG PLANNER
-# ==========================================================
+
 
 PLANNING_SYSTEM_PROMPT = """
 You are an elite technical writer.
