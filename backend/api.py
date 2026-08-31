@@ -58,6 +58,7 @@ class GenerateRequest(BaseModel):
     current_date: Optional[str] = None
 
 
+@app.get("/")
 @app.get("/health")
 def health():
     return {"ok": True, "mongo": ping_mongo()}
