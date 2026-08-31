@@ -2,6 +2,10 @@
 
 A multi-agent technical blog generator. Given a topic, the system decides whether web research is required, plans a structured outline, writes sections in parallel, optionally generates diagrams, uploads those images to Cloudinary, and persists the finished post in MongoDB so it can be loaded and rendered later.
 
+**In-depth internals** (flows, functions, scale, cost, interview Qs): see **[docs/](docs/README.md)**.
+
+The control plane is a **LangGraph** `StateGraph`. Text and images are produced with **Google Gemini**. Research uses **Tavily**. The HTTP API is **FastAPI**. The UI is a **React (Vite + JSX)** app.
+
 The control plane is a **LangGraph** `StateGraph`. Text and images are produced with **Google Gemini**. Research uses **Tavily**. The HTTP API is **FastAPI**. The UI is a **React (Vite + JSX)** app.
 
 Typical deployment split:

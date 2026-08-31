@@ -93,7 +93,7 @@ export default function App() {
           setResult(event.state);
 
           if (event.persist_error) {
-            setError(`Generated, but MongoDB save failed: ${event.persist_error}`);
+            setError(`Generated, but this post could not be saved: ${event.persist_error}`);
           }
 
           listBlogs()
@@ -159,11 +159,11 @@ export default function App() {
   return (
     <div className="shell">
       <aside className="rail">
-        <p className="eyebrow">Gemini · LangGraph</p>
-        <h1>Blog Writing Agent</h1>
+        <p className="eyebrow">Writing studio</p>
+        <h1>Copydesk</h1>
         <p className="lede">
-          Route, research, draft, and illustrate a technical post. Diagrams go
-          to Cloudinary; posts are saved in MongoDB.
+          Turn a topic into a researched, illustrated article. Finished drafts
+          live in your library so you can open them again later.
         </p>
 
         <form className="compose" onSubmit={onGenerate}>
@@ -197,9 +197,11 @@ export default function App() {
         )}
 
         <div className="saved">
-          <h2>Saved in MongoDB</h2>
+          <h2>Library</h2>
           {saved.length === 0 ? (
-            <p className="muted">Generated posts are stored with Cloudinary image URLs.</p>
+            <p className="muted">
+              Finished drafts show up here after you generate a post.
+            </p>
           ) : (
             <>
               <select
@@ -388,7 +390,7 @@ export default function App() {
             <>
               {assets.length === 0 ? (
                 <p className="muted">
-                  No Cloudinary diagrams for this run.
+                  No diagrams for this run.
                 </p>
               ) : (
                 <div className="gallery">
@@ -398,7 +400,7 @@ export default function App() {
                       <figcaption>
                         {asset.caption}
                         <a href={asset.url} target="_blank" rel="noreferrer">
-                          Open on Cloudinary
+                          Open original
                         </a>
                       </figcaption>
                     </figure>
