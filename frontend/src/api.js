@@ -1,11 +1,37 @@
-export function apiBaseUrl() {
-  const configured = import.meta.env.VITE_API_URL?.trim();
+const RENDER_API = "https://ai-blog-writer-agent.onrender.com";
 
-  if (configured) {
-    return configured.replace(/\/$/, "");
+function isBrowserLocal() {
+  if (typeof window === "undefined") {
+    return true;
   }
 
-  return "";
+  const host = window.location.hostname;
+  return host === "localhost" || host === "127.0.0.1";
+}
+
+function isLocalApiUrl(url) {
+  return (
+    !url ||
+    url.includes("localhost") ||
+    url.includes("127.0.0.1")
+  );
+}
+
+export function apiBaseUrl() {
+  const configured = (import.meta.env.VITE_API_URL || "").trim().replace(
+    /\/$/,
+    "",
+  );
+
+  if (!isBrowserLocal()) {
+    if (!isLocalApiUrl(configured)) {
+      return configured;
+    }
+
+    return RENDER_API;
+  }
+
+  return configured;
 }
 
 export function blogToState(blog) {
